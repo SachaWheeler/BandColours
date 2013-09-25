@@ -45,8 +45,7 @@ class LastFm{
 			return;
 		$tags = new SimpleXMLElement(
 			$this->fetch($this->tagSearchUrl.
-				"&artist=".urlencode($artist).
-				"&limit=5"));
+				"&artist=".urlencode($artist)));
 		foreach($tags->toptags->tag as $tag){
 			if(count($tagArray) == $this->numberOfTags)
 				break;

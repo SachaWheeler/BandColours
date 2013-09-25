@@ -29,16 +29,21 @@ $colours = array("red",
 				"white",
 				"grey",
 				"black");
+				
+$ignoreTags = array("All",
+					"under 2000 listeners");			
+
 
 foreach($colours as $colour){
 	foreach($lastfm->searchArtist($colour) as $artist){
 		echo $artist."\n";
 		foreach($lastfm->getArtistTags($artist) as $tag){
-//			print_r((string)$tag);
+			if(in_array($tag, $ignoreTags))
+				continue;
 			$colourArray[$colour][(string)$tag]++;
 		}
-//		sleep(1);
 	}
+	sleep(1);
 }
 
 foreach($colourArray as $k=>$v){
