@@ -9,21 +9,24 @@ class LastFm{
 	protected $domain;
 	protected $artistSearchUrl;
 	protected $tagSearchUrl;
+	protected $numberOfArtists;
+	protected $numberOfTags;
 
 	public function __construct(){
 		$this->key = "03337138fe5149f05088428490c33f0b";
 		$this->domain = "http://ws.audioscrobbler.com/2.0/?api_key=".$this->key;
 		$this->artistSearchUrl = $this->domain."&method=artist.search"; 
 		$this->tagSearchUrl = $this->domain."&method=artist.gettoptags"; 
-		// http://ws.audioscrobbler.com/2.0/?method=artist.getTags&artist=Red%20Hot%20Chili%20Peppers&user=RJ&api_key=03337138fe5149f05088428490c33f0b
+		$this->numberOfArtists = 100;
+		$this->numberOfTags = 5;
 	}
 
 	public function searchArtist($term){
 		$artistArray = array();
 		if($term == '')
 			return;
-		$page=0;
-		while(count($artistArray)<100){
+		$page=1;
+		while(count($artistArray)<$this->numberOfArtists){
 			$artists = new SimpleXMLElement(
 				$this->fetch($this->artistSearchUrl.
 					"&artist=".urlencode($term).
@@ -45,12 +48,22 @@ class LastFm{
 				"&artist=".urlencode($artist).
 				"&limit=5"));
 		foreach($tags->toptags->tag as $tag){
-			if(count($tagArray) ==5)
+			if(count($tagArray) == $this->numberOfTags)
 				break;
 			if($tag->count > 0)
 				$tagArray[] = $tag->name;
 		}
 		return $tagArray;
+	}
+	
+	public function setNumberOfArtists($num){
+		if($num > 0)
+			$this->numberOfArtists = $num;
+	}
+	
+	public function setNumberOfTags($num){
+		if($num > 0)
+			$this->numberOfTags = $num;
 	}
 	
 	protected function fetch($url){
