@@ -19,28 +19,19 @@ $lastfm->setNumberOfArtists(100);
 $lastfm->setNumberofTags(5);
 $colourArray = array();
 
-$colours = array("red",
-				"orange",
-				"yellow",
-				"green",
-				"blue",
-				"indigo",
-				"violet",
-				"white",
-				"grey",
-				"black");
+$colours = array("red", "orange", "yellow", "green", "blue",
+ 	"indigo", "violet", "white", "grey", "black");
 				
-$ignoreTags = array("All",
-					"under 2000 listeners");			
-
+$ignoreTags = array("All", "under 2000 listeners");			
 
 foreach($colours as $colour){
 	foreach($lastfm->searchArtist($colour) as $artist){
-		echo $artist."\n";
+		if(count($colourArray[$colour]['artists']) <10)
+			$colourArray[$colour]['artists'][] = $artist;
 		foreach($lastfm->getArtistTags($artist) as $tag){
 			if(in_array($tag, $ignoreTags))
 				continue;
-			$colourArray[$colour][(string)$tag]++;
+			$colourArray[$colour]['tags'][(string)$tag]++;
 		}
 	}
 	sleep(1);
