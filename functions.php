@@ -13,7 +13,7 @@ class LastFm{
 	protected $numberOfTags;
 
 	public function __construct(){
-		$this->key = "03337138fe5149f05088428490c33f0b";
+		$this->key = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
 		$this->domain = "http://ws.audioscrobbler.com/2.0/?api_key=".$this->key;
 		$this->artistSearchUrl = $this->domain."&method=artist.search"; 
 		$this->tagSearchUrl = $this->domain."&method=artist.gettoptags"; 
