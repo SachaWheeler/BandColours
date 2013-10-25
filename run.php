@@ -1,6 +1,6 @@
 <?php
 
-include_once("functions.php");
+include_once("class.php");
 $outfile = "./output.txt";
 /*
 if(file_exists($outfile)){
